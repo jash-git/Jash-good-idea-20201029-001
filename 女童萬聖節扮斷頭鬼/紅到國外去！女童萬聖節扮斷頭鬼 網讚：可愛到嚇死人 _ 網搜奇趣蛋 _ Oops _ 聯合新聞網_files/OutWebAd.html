@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0108)https://shopping.udn.com/mall/outWebAd_udnCom_rwd.html?&kdid=ERuoops&cate=X_001_001&device=0&mode=N&t=526268 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" src="./jquery-1.11.2.min.js.下載"></script>
+	<script type="text/javascript" src="./jquery.cookie.js.下載"></script>
+	<script type="text/javascript" src="./slick.min.js.下載"></script>
+		
+ 	<link href="./slick.css" rel="stylesheet">
+	<link href="./news_udn.css" rel="stylesheet">  
+
+		
+<!-- 	<link href="./css/pc/slick.css?t=123456" rel="stylesheet" />
+	<link href="./css/news_udn.css?t=12345" rel="stylesheet" />
+		  
+	<script type="text/javascript" src="/mall/js/pc/jquery-1.11.2.min.js?t=20180905095813" ></script>
+	<script type="text/javascript" src="/mall/js/jquery.cookie.js?t=20180905095550"></script>
+	
+	<script type="text/javascript" src="./js/pc/slick.min.js" type="text/javascript"></script>-->
+
+	
+	<script type="text/javascript">	
+		$(function(){
+			
+			if($.cookie("sessionCnt") == null){
+				$.cookie("sessionCnt", 1);
+			}else{
+				var cnt = parseInt($.cookie("sessionCnt"));
+				cnt +=1;
+				$.cookie("sessionCnt", cnt);
+			}
+			
+			var cate = getUrlParameter('cate');	//銷售分類
+			var kdid = getUrlParameter('kdid');	//channel
+			var kdids = {
+					"recom_product00":"a",
+					"recom_product01":"b",
+					"recom_product02":"c",
+					"recom_product03":"d",
+					"recom_product04":"e",
+					"recom_product05":"f",
+					"recom_product06":"g",
+					"recom_product07":"h",
+					"recom_product08":"i",
+					"recom_product09":"j",
+					"recom_product10":"k",
+					"recom_product11":"l",
+					"recom_product12":"m",
+					"recom_product13":"n",
+					"recom_product14":"o"					
+			};
+			
+			var eruid = $.cookie("__eruid");			
+			var device = getUrlParameter('device');	//裝置類型
+			var sessionCnt = $.cookie("sessionCnt");	//工作階段
+			var mode = getUrlParameter('mode');	//裝置類型
+			var _ga = $.cookie("_ga");	
+
+			var url ='https://cym-rec.udn.com/udn_hmm_15_recommendation';			
+			
+			$.ajax({
+				type:"GET",
+				url: url,
+				dataType: 'JSON',
+				data: {
+					cate : cate, 
+					eruid : eruid, 
+					session_count : sessionCnt, 
+					device : device,
+					channel : kdid,
+					clientid : _ga
+				},
+				success : function(data){
+					var recNo = 0;
+					var prdStr = "";
+					$.each(data, function(k, v){
+						var json = $.parseJSON(JSON.stringify(v));
+						if (k.indexOf("recom_product") >= 0 && recNo < 5 && prdStr.indexOf(json.iid) < 0) {
+							$('#ec_body').append(
+						    		'<li class="ht_item">'+
+							    		'<a href="//shopping.udn.com/mall/cus/cat/Cc1c02.do?utm_source=udnnews&utm_medium=cymrec&dc_cargxuid_0='+json.iid+'&dc_cateid_0='+json.cate+'&kdid=' + kdid + '-' + kdids[k] + '" title="'+json.dsr+'" target="_blank">'+
+							    			'<img src="' + json.pic + '" ' + 
+							    			' onmousedown="cymmetricsCallBack(event,\'' + eruid + '\',\'' + device + '\',\'' + json.iid + '\',\'' + json.placement + '\',\'' + json.type + '\',\'' + json.matching_status + '\',\'' + kdid + '\',\''+ kdid + '-' + kdids[k] + '\')' + 
+							    			'" />'+
+							    		'</a>'+
+							    		'<div class="caption">'+
+							    			'<p class="pd_name">'+
+							    				'<a href="//shopping.udn.com/mall/cus/cat/Cc1c02.do?utm_source=udnnews&utm_medium=cymrec&dc_cargxuid_0='+json.iid+'&dc_cateid_0='+json.cate+'&kdid=' + kdid + '-' + kdids[k] + '" title="'+json.dsr+'" target="_blank">'+ 
+							    				json.dsr+'</a>'+
+							    			'</p>'+
+							    			'<p class="pd_price">'+
+								    			'<span class="pd_s_offer">特價</span>'+
+								    			'<span class="pd_hlight">'+json.price+'</span>'+
+							    			'</p>'+
+							    		'</div>'+						    			
+						    		'</li>'
+						    );
+							recNo = recNo + 1;
+							prdStr = prdStr + json.iid ;
+						}
+					});
+					newsSlider();
+		    	},
+		    	error : function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log(XMLHttpRequest);
+					console.log(textStatus);
+					console.log(errorThrown);
+		    	}	
+			});
+			
+		});		
+		
+		function cymmetricsCallBack(event, eruid, device, fxuid, placement, type, matching_status, channel, kdid) {
+			var buttonClick = event.button;
+			if(buttonClick == 0 || buttonClick == 1) {
+				var url = 'https://cym-rec.udn.com/udn_recommendation_reply';
+				$.ajax({
+					type : "GET",
+					url : url,
+					dataType : 'JSON',
+					data : {
+						eruid : eruid,
+						device : device,
+						fxuid : fxuid,
+						placement : placement,
+						type : type,
+						matching_status : matching_status,
+						channel : channel,
+						kdid : kdid
+					},
+					success : function(data) {
+						console.log(data);
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						console.log(XMLHttpRequest);
+						console.log(textStatus);
+						console.log(errorThrown);
+					}
+				});					
+			}			
+		}
+
+		function getUrlParameter(sParam) {
+			var sPageURL = decodeURIComponent(window.location.search
+					.substring(1)), sURLVariables = sPageURL.split('&'), sParameterName, i;
+
+			for (i = 0; i < sURLVariables.length; i++) {
+				sParameterName = sURLVariables[i].split('=');
+
+				if (sParameterName[0] === sParam) {
+					return sParameterName[1] === undefined ? true
+							: sParameterName[1];
+				}
+			}
+		};
+		
+		function newsSlider(){
+			$('.news_slider').slick({
+				infinite: true,
+				slidesToShow: 4,
+				slidesToScroll: 4,
+				dots: false,
+				arrows: false,				
+				responsive: [
+					{
+						breakpoint: 1024, 
+						settings: {
+							infinite: true,
+							slidesToShow: 5, 
+							slidesToScroll: 5,
+							dots: false,
+							arrows: false,
+							
+						}
+					},
+					{
+						breakpoint: 800, 
+						settings: {
+							infinite: true,
+							slidesToShow: 4, 
+							slidesToScroll: 4,
+							dots: false,
+							arrows: false,							
+						}					
+					}
+				]
+			});
+		}
+		
+	</script>
+	
+<!-- 
+</head>
+<body>-->
+</head><body><div id="ec" class="news_udn_wrap">
+	<div class="ht_upper_head">
+			<div class="ht_title"><img src="./logo.jpg"></div>
+	</div>
+    <div class="ht_up_wrap slide_wrap ht_up_content_wrap">
+
+	<ul id="ec_body" class="slider news_slider slick-initialized slick-slider"><div aria-live="polite" class="slick-list draggable" tabindex="0"><div class="slick-track" style="opacity: 1; width: 855px; transform: translate3d(0px, 0px, 0px);"><li class="ht_item slick-slide slick-active" aria-hidden="false" data-slick-index="0" style="width: 158px;"><a href="https://shopping.udn.com/mall/cus/cat/Cc1c02.do?utm_source=udnnews&amp;utm_medium=cymrec&amp;dc_cargxuid_0=U010817222&amp;dc_cateid_0=Q_001_003_045&amp;kdid=ERuoops-a" title="HTC Desire 20 pro (6G/128G) 五鏡頭6.5 吋大螢幕大電力美拍手機" target="_blank"><img src="./20200617174831835_135.jpg" onmousedown="cymmetricsCallBack(event,&#39;null&#39;,&#39;0&#39;,&#39;U010817222&#39;,&#39;02_00&#39;,&#39;topn_00&#39;,&#39;1&#39;,&#39;ERuoops&#39;,&#39;ERuoops-a&#39;)"></a><div class="caption"><p class="pd_name"><a href="https://shopping.udn.com/mall/cus/cat/Cc1c02.do?utm_source=udnnews&amp;utm_medium=cymrec&amp;dc_cargxuid_0=U010817222&amp;dc_cateid_0=Q_001_003_045&amp;kdid=ERuoops-a" title="HTC Desire 20 pro (6G/128G) 五鏡頭6.5 吋大螢幕大電力美拍手機" target="_blank">HTC Desire 20 pro (6G/128G) 五鏡頭6.5 吋大螢幕大電力美拍手機</a></p><p class="pd_price"><span class="pd_s_offer">特價</span><span class="pd_hlight">7106</span></p></div></li><li class="ht_item slick-slide slick-active" aria-hidden="false" data-slick-index="1" style="width: 158px;"><a href="https://shopping.udn.com/mall/cus/cat/Cc1c02.do?utm_source=udnnews&amp;utm_medium=cymrec&amp;dc_cargxuid_0=U010853260&amp;dc_cateid_0=E_008_002_004&amp;kdid=ERuoops-b" title="PHILIPS 243V7QDABF 24型IPS廣視角螢幕" target="_blank"><img src="./copy_p_202009100909280363_135.jpg" onmousedown="cymmetricsCallBack(event,&#39;null&#39;,&#39;0&#39;,&#39;U010853260&#39;,&#39;02_01&#39;,&#39;topn_01&#39;,&#39;1&#39;,&#39;ERuoops&#39;,&#39;ERuoops-b&#39;)"></a><div class="caption"><p class="pd_name"><a href="https://shopping.udn.com/mall/cus/cat/Cc1c02.do?utm_source=udnnews&amp;utm_medium=cymrec&amp;dc_cargxuid_0=U010853260&amp;dc_cateid_0=E_008_002_004&amp;kdid=ERuoops-b" title="PHILIPS 243V7QDABF 24型IPS廣視角螢幕" target="_blank">PHILIPS 243V7QDABF 24型IPS廣視角螢幕</a></p><p class="pd_price"><span class="pd_s_offer">特價</span><span class="pd_hlight">2688</span></p></div></li><li class="ht_item slick-slide slick-active" aria-hidden="false" data-slick-index="2" style="width: 158px;"><a href="https://shopping.udn.com/mall/cus/cat/Cc1c02.do?utm_source=udnnews&amp;utm_medium=cymrec&amp;dc_cargxuid_0=U010612166&amp;dc_cateid_0=C_004_007_006&amp;kdid=ERuoops-c" title="【SKYLIE銀離子】窄邊天絲棉比基尼低腰褲-深紫" target="_blank"><img src="./20190826183508238_135.jpg" onmousedown="cymmetricsCallBack(event,&#39;null&#39;,&#39;0&#39;,&#39;U010612166&#39;,&#39;02_02&#39;,&#39;topn_02&#39;,&#39;1&#39;,&#39;ERuoops&#39;,&#39;ERuoops-c&#39;)"></a><div class="caption"><p class="pd_name"><a href="https://shopping.udn.com/mall/cus/cat/Cc1c02.do?utm_source=udnnews&amp;utm_medium=cymrec&amp;dc_cargxuid_0=U010612166&amp;dc_cateid_0=C_004_007_006&amp;kdid=ERuoops-c" title="【SKYLIE銀離子】窄邊天絲棉比基尼低腰褲-深紫" target="_blank">【SKYLIE銀離子】窄邊天絲棉比基尼低腰褲-深紫</a></p><p class="pd_price"><span class="pd_s_offer">特價</span><span class="pd_hlight">280</span></p></div></li><li class="ht_item slick-slide slick-active" aria-hidden="false" data-slick-index="3" style="width: 158px;"><a href="https://shopping.udn.com/mall/cus/cat/Cc1c02.do?utm_source=udnnews&amp;utm_medium=cymrec&amp;dc_cargxuid_0=U010809354&amp;dc_cateid_0=C_003_018_017_003&amp;kdid=ERuoops-d" title="【Tani】奧地利超細櫸木天絲纖維-女無痕背心79625350" target="_blank"><img src="./20200703144402001_135.jpg" onmousedown="cymmetricsCallBack(event,&#39;null&#39;,&#39;0&#39;,&#39;U010809354&#39;,&#39;02_03&#39;,&#39;topn_03&#39;,&#39;1&#39;,&#39;ERuoops&#39;,&#39;ERuoops-d&#39;)"></a><div class="caption"><p class="pd_name"><a href="https://shopping.udn.com/mall/cus/cat/Cc1c02.do?utm_source=udnnews&amp;utm_medium=cymrec&amp;dc_cargxuid_0=U010809354&amp;dc_cateid_0=C_003_018_017_003&amp;kdid=ERuoops-d" title="【Tani】奧地利超細櫸木天絲纖維-女無痕背心79625350" target="_blank">【Tani】奧地利超細櫸木天絲纖維-女無痕背心79625350</a></p><p class="pd_price"><span class="pd_s_offer">特價</span><span class="pd_hlight">1121</span></p></div></li><li class="ht_item slick-slide slick-active" aria-hidden="false" data-slick-index="4" style="width: 158px;"><a href="https://shopping.udn.com/mall/cus/cat/Cc1c02.do?utm_source=udnnews&amp;utm_medium=cymrec&amp;dc_cargxuid_0=U010868457&amp;dc_cateid_0=O_008_002_009&amp;kdid=ERuoops-e" title="【CASIO】槍魚系列黑水鬼風格運動休閒錶-(MDV-106-1A)黑" target="_blank"><img src="./copy_p_202010071836031213_135.jpg" onmousedown="cymmetricsCallBack(event,&#39;null&#39;,&#39;0&#39;,&#39;U010868457&#39;,&#39;02_04&#39;,&#39;topn_04&#39;,&#39;1&#39;,&#39;ERuoops&#39;,&#39;ERuoops-e&#39;)"></a><div class="caption"><p class="pd_name"><a href="https://shopping.udn.com/mall/cus/cat/Cc1c02.do?utm_source=udnnews&amp;utm_medium=cymrec&amp;dc_cargxuid_0=U010868457&amp;dc_cateid_0=O_008_002_009&amp;kdid=ERuoops-e" title="【CASIO】槍魚系列黑水鬼風格運動休閒錶-(MDV-106-1A)黑" target="_blank">【CASIO】槍魚系列黑水鬼風格運動休閒錶-(MDV-106-1A)黑</a></p><p class="pd_price"><span class="pd_s_offer">特價</span><span class="pd_hlight">1811</span></p></div></li></div></div></ul>
+	</div>	 
+    <!-- /#ec_body -->
+</div>
+<!-- /#ec -->
+
+<!-- track code -->
+<!-- <jsp:include page="/cus/adv/outWebAd_trackcode.jsp" /> -->
+<!-- </body>
+</html> -->
+</body></html>
