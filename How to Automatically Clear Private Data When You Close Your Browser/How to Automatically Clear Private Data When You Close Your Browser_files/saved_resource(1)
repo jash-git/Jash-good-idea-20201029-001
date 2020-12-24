@@ -1,0 +1,38 @@
+
+var ftGUID_4215982="462361444D56D9";
+var ftConfID_4215982="0";
+var ftParams_4215982="ftx=&fty=&ftadz=&ftscw=&ft_custom=&ftOBA=1&ft_ifb=1&ft_domain=www.howtogeek.com&ft_agentEnv=0&ft_referrer=https%3A%2F%2Fwww.howtogeek.com%2F&cachebuster=409978.6393557938";
+var ftKeyword_4215982="";
+var ftCustom_4215982="";
+var ftSection_4215982="";
+var ftSegment_4215982="";
+var ftSegmentList_4215982=[];
+var ftRuleMatch_4215982="0";
+var ftTimestamp_4215982="1608774985";
+var ftGeoC2_4215982="tw";
+var ftGeoState_4215982="txg";
+var ftGeoCity_4215982="taichung";
+var ftISP_4215982="vibo telecom inc.";
+var ftSpeed_4215982="mobile";
+var ftDMA_4215982="-1";
+var ftLong_4215982="120.67";
+var ftLat_4215982="24.14";
+var ftPostal_4215982="403 55";
+var ftTimeZone_4215982="800";
+var ftMobileCarrier_4215982="t star";
+var ftImp4215982 = {};
+ftImp4215982.privacy = "x";
+ftImp4215982.guidAge = "118";
+ftImp4215982.impID = "9B11357A-3EA1-10EB-EDE5-C416331FC70A";
+ftImp4215982.duid = "FT:462361444D56D9";
+
+ftImp4215982.ft_tpplid = "";
+ftImp4215982.ft_c = {};
+ftImp4215982.gdpr = "";
+ftImp4215982.gdpr_consent = "";
+ftImp4215982.gdpr_pd = "";
+ftImp4215982.oob_consent = "0";
+ftImp4215982.gdprStoredConsent = "";
+ftImp4215982.us_privacy = "";
+
+document.write('<scr'+'ipt src="https://cdn.flashtalking.com/xre/421/4215982/3214233/js/j-4215982-3214233.js" id="ftscript_m4215982" name="ftscript_m4215982"></scr'+'ipt>');

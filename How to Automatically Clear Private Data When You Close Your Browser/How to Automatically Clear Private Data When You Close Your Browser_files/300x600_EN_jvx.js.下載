@@ -1,0 +1,341 @@
+(function (cjs, an) {
+
+	var p; // shortcut to reference prototypes
+	var lib={};var ss={};var img={};
+	lib.ssMetadata = [];
+	
+	
+	// symbols:
+	
+	
+	
+	(lib.border = function() {
+		this.initialize(img.border);
+	}).prototype = p = new cjs.Bitmap();
+	p.nominalBounds = new cjs.Rectangle(0,0,600,1200);
+	
+	
+	(lib.logo = function() {
+		this.initialize(img.logo);
+	}).prototype = p = new cjs.Bitmap();
+	p.nominalBounds = new cjs.Rectangle(0,0,600,180);
+	
+	
+	(lib.pic = function() {
+		this.initialize(img.pic);
+	}).prototype = p = new cjs.Bitmap();
+	p.nominalBounds = new cjs.Rectangle(0,0,600,1020);
+	
+	
+	(lib.shadow = function() {
+		this.initialize(img.shadow);
+	}).prototype = p = new cjs.Bitmap();
+	p.nominalBounds = new cjs.Rectangle(0,0,600,1020);// helper functions:
+	
+	function mc_symbol_clone() {
+		var clone = this._cloneProps(new this.constructor(this.mode, this.startPosition, this.loop));
+		clone.gotoAndStop(this.currentFrame);
+		clone.paused = this.paused;
+		clone.framerate = this.framerate;
+		return clone;
+	}
+	
+	function getMCSymbolPrototype(symbol, nominalBounds, frameBounds) {
+		var prototype = cjs.extend(symbol, cjs.MovieClip);
+		prototype.clone = mc_symbol_clone;
+		prototype.nominalBounds = nominalBounds;
+		prototype.frameBounds = frameBounds;
+		return prototype;
+		}
+	
+	
+	(lib.Tween5 = function(mode,startPosition,loop) {
+		this.initialize(mode,startPosition,loop,{});
+	
+		// Layer_1
+		this.SubHeadlineText = new cjs.Text(lib.jvxStrings[0].text, lib.jvxStrings[0].font, lib.jvxStrings[0].color);
+		this.SubHeadlineText.name = "SubHeadlineText";
+		this.SubHeadlineText.lineHeight = lib.jvxStrings[0].lineHeight;
+		this.SubHeadlineText.lineWidth = 266;
+		this.SubHeadlineText.parent = this;
+		this.SubHeadlineText.setTransform(2,2);
+	try { _jvxSetTextVertPos(lib, 0, this.SubHeadlineText); } catch(ex){}
+	
+		this.timeline.addTween(cjs.Tween.get(this.SubHeadlineText).wait(1));
+	
+	}).prototype = p = new cjs.MovieClip();
+	p.nominalBounds = new cjs.Rectangle(0,0,270,35.5);
+	
+	
+	(lib.Tween3 = function(mode,startPosition,loop) {
+		this.initialize(mode,startPosition,loop,{});
+	
+		// Layer_1
+		this.HeadlineText = new cjs.Text(lib.jvxStrings[1].text, lib.jvxStrings[1].font, lib.jvxStrings[1].color);
+		this.HeadlineText.name = "HeadlineText";
+		this.HeadlineText.lineHeight = lib.jvxStrings[1].lineHeight;
+		this.HeadlineText.lineWidth = 266;
+		this.HeadlineText.parent = this;
+		this.HeadlineText.setTransform(-133,-39.9);
+	try { _jvxSetTextVertPos(lib, 1, this.HeadlineText); } catch(ex){}
+	
+		this.timeline.addTween(cjs.Tween.get(this.HeadlineText).wait(1));
+	
+	}).prototype = p = new cjs.MovieClip();
+	p.nominalBounds = new cjs.Rectangle(-135,-41.9,270,69);
+	
+	
+	(lib.Tween1 = function(mode,startPosition,loop) {
+		this.initialize(mode,startPosition,loop,{});
+	
+		// Layer_1
+		this.instance = new lib.pic();
+		this.instance.parent = this;
+		this.instance.setTransform(-150,-255,0.5,0.5);
+	
+		this.timeline.addTween(cjs.Tween.get(this.instance).wait(1));
+	
+	}).prototype = p = new cjs.MovieClip();
+	p.nominalBounds = new cjs.Rectangle(-150,-255,300,510);
+	
+	
+	(lib.logoCTA = function(mode,startPosition,loop) {
+		this.initialize(mode,startPosition,loop,{});
+	
+		// Layer_1
+		this.instance = new lib.logo();
+		this.instance.parent = this;
+		this.instance.setTransform(0,0,0.5,0.5);
+	
+		this.timeline.addTween(cjs.Tween.get(this.instance).wait(1));
+	
+	}).prototype = getMCSymbolPrototype(lib.logoCTA, new cjs.Rectangle(0,0,300,90), null);
+	
+	
+	// stage content:
+	(lib._300x600_EN = function(mode,startPosition,loop) {
+		this.initialize(mode,startPosition,loop,{});
+	
+		// timeline functions:
+		this.frame_0 = function() {
+			//dynamic Data
+		
+		if(dynamicData["FB_OfferLive"] != "undefined")
+		{
+			console.log("DB resolving");
+			var DBName = "FB_OfferLive";
+			this.BG_Image.instance.image.src=dynamicData[DBName][0]["BG_300x600"];
+			this.Headline.HeadlineText.text=dynamicData[DBName][0]["Headline_300x600"].replace(/--/gi,"\n");
+			this.SubHeadline.SubHeadlineText.text=dynamicData[DBName][0]["SubHeadline_300x600"].replace(/--/gi,"\n");
+			this.logoCTA.instance.image.src=dynamicData[DBName][0]["CTA_300x600"];
+		
+					//Asset Variant Impression
+			var dim = dynamicData["campaignProperties:campaignProperties.creativeDim"];
+			var dbcolumnName = "ImageLabelling_"+dim;
+			var dbimagelabel = dynamicData[DBName][0][dbcolumnName];
+			var assetvariantName  = dbimagelabel;
+			jvxAd.recordAssetVariation("impression",assetvariantName);
+		
+	
+		this.Headline.HeadlineText.font= "23px 'Swiss721BT-Light' ";
+		this.Headline.HeadlineText.lineHeight= "22";
+		this.SubHeadline.SubHeadlineText.font= "12.5px 'swiss721bt_medium_0' ";
+		this.SubHeadline.SubHeadlineText.lineHeight="15";		
+							
+							
+					canvas.style.cursor = "pointer";
+							
+							var SliderURL = dynamicData[DBName][0]["CTURL"];
+									canvas.onclick = fl_Click;
+									function fl_Click()
+									{
+									//Asset Variant Click
+			var dim = dynamicData["campaignProperties:campaignProperties.creativeDim"];
+			var dbcolumnName = "ImageLabelling_"+dim;
+			var dbimagelabel = dynamicData[DBName][0][dbcolumnName];
+			var assetvariantName  = dbimagelabel;
+			jvxAd.recordAssetVariation("click",assetvariantName);
+										if(typeof jvxAd == "undefined")
+											return;
+										if(typeof jvxAd != "undefined")
+										{
+										jvxAd.openClickThrough(SliderURL);	
+										}	
+										else{
+											jvxAd.openClickThrough();
+										}
+							}
+		}
+		}
+		this.frame_119 = function() {
+			this.stop();
+		}
+	
+		// actions tween:
+		this.timeline.addTween(cjs.Tween.get(this).call(this.frame_0).wait(119).call(this.frame_119).wait(1));
+	
+		// Copy
+		this.SubHeadline = new lib.Tween5();
+		this.SubHeadline.name = "SubHeadline";
+		this.SubHeadline.parent = this;
+		this.SubHeadline.setTransform(-15,170);
+		this.SubHeadline.alpha = 0;
+		this.SubHeadline._off = true;
+	
+		this.timeline.addTween(cjs.Tween.get(this.SubHeadline).wait(10).to({_off:false},0).to({x:15,alpha:1},10).wait(100));
+	
+		// Headline
+		this.Headline = new lib.Tween3();
+		this.Headline.name = "Headline";
+		this.Headline.parent = this;
+		this.Headline.setTransform(120,125.4);
+		this.Headline.alpha = 0;
+	
+		this.timeline.addTween(cjs.Tween.get(this.Headline).to({x:150,alpha:1},13).wait(107));
+	
+		// border
+		this.instance = new lib.border();
+		this.instance.parent = this;
+		this.instance.setTransform(0,0,0.5,0.5);
+	
+		this.timeline.addTween(cjs.Tween.get(this.instance).wait(120));
+	
+		// logo
+		this.logoCTA = new lib.logoCTA();
+		this.logoCTA.name = "logoCTA";
+		this.logoCTA.parent = this;
+		this.logoCTA.setTransform(150,555,1,1,0,0,0,150,45);
+	
+		this.timeline.addTween(cjs.Tween.get(this.logoCTA).wait(120));
+	
+		// shadow
+		this.instance_1 = new lib.shadow();
+		this.instance_1.parent = this;
+		this.instance_1.setTransform(0,0,0.5,0.5);
+	
+		this.timeline.addTween(cjs.Tween.get(this.instance_1).wait(120));
+	
+		// pic
+		this.BG_Image = new lib.Tween1();
+		this.BG_Image.name = "BG_Image";
+		this.BG_Image.parent = this;
+		this.BG_Image.setTransform(149.95,254.95,1.3333,1.3333);
+	
+		this.timeline.addTween(cjs.Tween.get(this.BG_Image).to({scaleX:1,scaleY:1,x:150,y:255},119).wait(1));
+	
+	}).prototype = p = new cjs.MovieClip();
+	p.nominalBounds = new cjs.Rectangle(100,215,250,385);
+	// library properties:
+	lib.jvxStrings = [
+{"id":"Tween5__1","text":"Explore heritage beauties \nto modern getaways","libName":"Tween5","font":"13px 'Arial'","fontPrefix":"","fontSuffix":"'Arial'","fontSize":"13","fontName":"Arial","colorType":"rgb","color":"#FFFFFF","yPos":"0","lineHeight":"10","lineWidth":"266","transformX":"2","transformY":"2","boxWidth":"270","boxHeight":"35.5","offsetY":"2","maxLines":"3","canVertAlign":"1"},
+{"id":"Tween3__1","text":"SOAK UP \nTHE FUN IN \nHO CHI MINH CITY","libName":"Tween3","font":"25px 'Arial'","fontPrefix":"","fontSuffix":"'Arial'","fontSize":"25","fontName":"Arial","colorType":"rgb","color":"#FFFFFF","yPos":"0","lineHeight":"20","lineWidth":"266","transformX":"-133","transformY":"-39.9","boxWidth":"270","boxHeight":"69","offsetY":"2","maxLines":"3","canVertAlign":"1"}
+];
+lib.properties = {
+		id: '7D68515EC0FC4F5098C98DD758116395',
+		width: 300,
+		height: 600,
+		fps: 24,
+		color: "#FFFFFF",
+		opacity: 1.00,
+		manifest: [
+			{src:"images/border.png?1597058607090", id:"border"},
+			{src:"images/logo.png?1597058607090", id:"logo"},
+			{src:"images/pic.jpg?1597058607090", id:"pic"},
+			{src:"images/shadow.png?1597058607090", id:"shadow"}
+		],
+		preloads: []
+	};
+	
+	
+	
+	// bootstrap callback support:
+	
+	(lib.Stage = function(canvas) {
+		createjs.Stage.call(this, canvas);
+	}).prototype = p = new createjs.Stage();
+	
+	p.setAutoPlay = function(autoPlay) {
+		this.tickEnabled = autoPlay;
+	}
+	p.play = function() { this.tickEnabled = true; this.getChildAt(0).gotoAndPlay(this.getTimelinePosition()) }
+	p.stop = function(ms) { if(ms) this.seek(ms); this.tickEnabled = false; }
+	p.seek = function(ms) { this.tickEnabled = true; this.getChildAt(0).gotoAndStop(lib.properties.fps * ms / 1000); }
+	p.getDuration = function() { return this.getChildAt(0).totalFrames / lib.properties.fps * 1000; }
+	
+	p.getTimelinePosition = function() { return this.getChildAt(0).currentFrame / lib.properties.fps * 1000; }
+	
+	an.bootcompsLoaded = an.bootcompsLoaded || [];
+	if(!an.bootstrapListeners) {
+		an.bootstrapListeners=[];
+	}
+	
+	an.bootstrapCallback=function(fnCallback) {
+		an.bootstrapListeners.push(fnCallback);
+		if(an.bootcompsLoaded.length > 0) {
+			for(var i=0; i<an.bootcompsLoaded.length; ++i) {
+				fnCallback(an.bootcompsLoaded[i]);
+			}
+		}
+	};
+	
+	an.compositions = an.compositions || {};
+	an.compositions['7D68515EC0FC4F5098C98DD758116395'] = {
+		getStage: function() { return exportRoot.getStage(); },
+		getLibrary: function() { return lib; },
+		getSpriteSheet: function() { return ss; },
+		getImages: function() { return img; }
+	};
+	
+	an.compositionLoaded = function(id) {
+		an.bootcompsLoaded.push(id);
+		for(var j=0; j<an.bootstrapListeners.length; j++) {
+			an.bootstrapListeners[j](id);
+		}
+	}
+	
+	an.getComposition = function(id) {
+		return an.compositions[id];
+	}
+	
+	
+	an.makeResponsive = function(isResp, respDim, isScale, scaleType, domContainers) {		
+		var lastW, lastH, lastS=1;		
+		window.addEventListener('resize', resizeCanvas);		
+		resizeCanvas();		
+		function resizeCanvas() {			
+			var w = lib.properties.width, h = lib.properties.height;			
+			var iw = window.innerWidth, ih=window.innerHeight;			
+			var pRatio = window.devicePixelRatio || 1, xRatio=iw/w, yRatio=ih/h, sRatio=1;			
+			if(isResp) {                
+				if((respDim=='width'&&lastW==iw) || (respDim=='height'&&lastH==ih)) {                    
+					sRatio = lastS;                
+				}				
+				else if(!isScale) {					
+					if(iw<w || ih<h)						
+						sRatio = Math.min(xRatio, yRatio);				
+				}				
+				else if(scaleType==1) {					
+					sRatio = Math.min(xRatio, yRatio);				
+				}				
+				else if(scaleType==2) {					
+					sRatio = Math.max(xRatio, yRatio);				
+				}			
+			}			
+			domContainers[0].width = w * pRatio * sRatio;			
+			domContainers[0].height = h * pRatio * sRatio;			
+			domContainers.forEach(function(container) {				
+				container.style.width = w * sRatio + 'px';				
+				container.style.height = h * sRatio + 'px';			
+			});			
+			stage.scaleX = pRatio*sRatio;			
+			stage.scaleY = pRatio*sRatio;			
+			lastW = iw; lastH = ih; lastS = sRatio;            
+			stage.tickOnUpdate = false;            
+			stage.update();            
+			stage.tickOnUpdate = true;		
+		}
+	}
+	
+	
+	})(createjs = createjs||{}, AdobeAn = AdobeAn||{});
+	var createjs, AdobeAn;
