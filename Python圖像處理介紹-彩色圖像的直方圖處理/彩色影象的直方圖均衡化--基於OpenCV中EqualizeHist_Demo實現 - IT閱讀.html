@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)https://www.itread01.com/content/1547194142.html -->
+<html class="js" lang="zh-TW" prefix="og: http://ogp.me/ns#"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style class="vjs-styles-defaults">
+      .video-js {
+        width: 300px;
+        height: 150px;
+      }
+
+      .vjs-fluid {
+        padding-top: 56.25%
+      }
+    </style>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="profile" href="https://gmpg.org/xfn/11">
+    <title>彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀</title>
+<script>document.documentElement.className = document.documentElement.className.replace("no-js","js");</script>
+<link href="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/atom-one-dark.min.css" rel="stylesheet">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="referrer" content="never">
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="hueman-main-style-css" href="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/main.info.css" type="text/css" media="all">
+<link href="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/prettify.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/prettify(1).css">
+<style id="hueman-main-style-inline-css" type="text/css">
+body { font-family:'Source Sans Pro', Arial, sans-serif;font-size:1.00rem }@media only screen and (min-width: 720px) {
+        .nav > li { font-size:1.00rem; }
+      }::selection { background-color: #fca61b; }
+::-moz-selection { background-color: #fca61b; }a,.themeform label .required,#flexslider-featured .flex-direction-nav .flex-next:hover,#flexslider-featured .flex-direction-nav .flex-prev:hover,.post-hover:hover .post-title a,.post-title a:hover,.sidebar.s1 .post-nav li a:hover i,.content .post-nav li a:hover i,.post-related a:hover,.sidebar.s1 .widget_rss ul li a,#footer .widget_rss ul li a,.sidebar.s1 .widget_calendar a,#footer .widget_calendar a,.sidebar.s1 .alx-tab .tab-item-category a,.sidebar.s1 .alx-posts .post-item-category a,.sidebar.s1 .alx-tab li:hover .tab-item-title a,.sidebar.s1 .alx-tab li:hover .tab-item-comment a,.sidebar.s1 .alx-posts li:hover .post-item-title a,#footer .alx-tab .tab-item-category a,#footer .alx-posts .post-item-category a,#footer .alx-tab li:hover .tab-item-title a,#footer .alx-tab li:hover .tab-item-comment a,#footer .alx-posts li:hover .post-item-title a,.comment-tabs li.active a,.comment-awaiting-moderation,.child-menu a:hover,.child-menu .current_page_item > a,.wp-pagenavi a{ color: #fca61b; }.themeform input[type="submit"],.themeform button[type="submit"],.sidebar.s1 .sidebar-top,.sidebar.s1 .sidebar-toggle,#flexslider-featured .flex-control-nav li a.flex-active,.post-tags a:hover,.sidebar.s1 .widget_calendar caption,#footer .widget_calendar caption,.author-bio .bio-avatar:after,.commentlist li.bypostauthor > .comment-body:after,.commentlist li.comment-author-admin > .comment-body:after{ background-color: #fca61b; }.post-format .format-container { border-color: #fca61b; }.sidebar.s1 .alx-tabs-nav li.active a,#footer .alx-tabs-nav li.active a,.comment-tabs li.active a,.wp-pagenavi a:hover,.wp-pagenavi a:active,.wp-pagenavi span.current{ border-bottom-color: #fca61b!important; }.sidebar.s2 .post-nav li a:hover i,
+.sidebar.s2 .widget_rss ul li a,
+.sidebar.s2 .widget_calendar a,
+.sidebar.s2 .alx-tab .tab-item-category a,
+.sidebar.s2 .alx-posts .post-item-category a,
+.sidebar.s2 .alx-tab li:hover .tab-item-title a,
+.sidebar.s2 .alx-tab li:hover .tab-item-comment a,
+.sidebar.s2 .alx-posts li:hover .post-item-title a { color: #3bcfe2; }
+.sidebar.s2 .sidebar-top,.sidebar.s2 .sidebar-toggle,.post-comments,.jp-play-bar,.jp-volume-bar-value,.sidebar.s2 .widget_calendar caption{ background-color: #3bcfe2; }.sidebar.s2 .alx-tabs-nav li.active a { border-bottom-color: #3bcfe2; }
+.post-comments span:before { border-right-color: #3bcfe2; }
+      .search-expand,
+              #nav-topbar.nav-container { background-color: #303030}@media only screen and (min-width: 720px) {
+                #nav-topbar .nav ul { background-color: #303030; }
+              }.is-scrolled #header .nav-container.desktop-sticky,
+              .is-scrolled #header .search-expand { background-color: #303030; background-color: rgba(48,48,48,0.90) }.is-scrolled .topbar-transparent #nav-topbar.desktop-sticky .nav ul { background-color: #303030; background-color: rgba(48,48,48,0.95) }#header { background-color: #363944; }
+@media only screen and (min-width: 720px) {
+  #nav-header .nav ul { background-color: #363944; }
+}
+        .is-scrolled #header #nav-mobile { background-color: #454e5c; background-color: rgba(69,78,92,0.90) }body { background-color: #eaeaea; }
+		.entry-inner h1{ font-size:20px; font-weight:bold;}
+		.entry-inner h2,h3,h4{ font-size:18px; font-weight:bold;}
+</style>
+ 
+
+<link rel="stylesheet" id="hueman-font-awesome-css" href="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/font-awesome.min.css" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+var monsterinsights_frontend = {"js_events_tracking":"true","is_debug_mode":"false","download_extensions":"","inbound_paths":"","home_url":"https:\/\/www.itread01.com","track_download_as":"event","internal_label":"int","hash_tracking":"false"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/frontend.min.js.下載"></script>
+<script type="text/javascript" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/jquery.js.下載"></script>
+<script type="text/javascript" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/jsjquery-migrate.min.js.下載"></script>
+<script src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/highlight.js.下載"></script>
+<link rel="stylesheet" type="text/css" href="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/default.css">
+<meta name="generator" content="WordPress 4.8.2">
+<!--[if lt IE 9]>
+<script src="/img/css/js/html5shiv-printshiv.min.js"></script>
+<script src="/img/css/js/selectivizr.js"></script>
+<![endif]-->
+<style>.ios7.web-app-mode.has-fixed header{ background-color: rgba(45,53,63,.88);}</style><meta http-equiv="origin-trial" content="A1H+PzQW00tt6dlReHFzfO4EtBaEtEImIF9ZNiF54JpDi1bO6/7PK96Q0qxy017wgzSy9ByDKoju2mo57DH+MwoAAAB7eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2MTAzOTg0NTIsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"></head>
+<body data-rsssl="1" class="post-template-default single single-post postid-43193 single-format-standard wp-custom-logo col-2cl full-width topbar-enabled header-desktop-sticky header-mobile-sticky chrome hu-smoothscroll">
+    <div id="wrapper">
+        <header id="header" class="specific-mobile-menu-on one-mobile-menu mobile_menu header-ads-desktop header-ads-mobile topbar-transparent no-header-img fixed-header-on" style="height: 175px; padding-top: 50px;">
+        <nav class="nav-container group mobile-menu mobile-sticky " id="nav-mobile" data-menu-id="header-1">
+  <div class="mobile-title-logo-in-header"><p class="site-title"><a class="custom-logo-link" href="https://www.itread01.com/" rel="home" title="首頁"><img src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/logo.png"></a></p>
+                </div>
+        <div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+          <div class="ham__navbar-span-wrapper">
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
+            <span class="line line-3"></span>
+          </div>
+        </div>
+            
+      <div class="nav-text"></div>
+      <div class="nav-wrap container">
+                  <ul class="nav container-inner group mobile-search">
+                            <li>
+                  <form class="searchform themeform" onsubmit="return searchKw(this)">
+	<div>
+		<input type="text" name="kw" class="search" onblur="if(this.value==&#39;&#39;)this.value=&#39;輸入關鍵字後搜尋&#39;;" onfocus="if(this.value==&#39;輸入關鍵字後搜尋&#39;)this.value=&#39;&#39;;" value="輸入關鍵字後搜尋">
+	</div>
+</form>    
+<script>function searchKw(c){var b=c.getElementsByTagName("input")[0],a=b.value.replace(/^\s+|\s+$/g,"");a=a.replace(/['"]/g,"");location.href="https://www.itread01.com/search/"+encodeURIComponent(a)+"";return false};</script>            </li>
+                      </ul>
+                <ul id="menu-top" class="nav container-inner group">
+                 <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="https://www.itread01.com/">首頁</a></li>
+				<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="https://www.itread01.com/%E7%A7%91%E6%8A%80/">科技</a></li>
+						  <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="https://www.itread01.com/info/">程式語言</a></li>
+ 
+</ul>      </div>
+</nav><!--/#nav-topbar-->  
+        <nav class="nav-container group desktop-menu desktop-sticky sticky-visible" id="nav-topbar" data-menu-id="header-2" style="max-width: 1903px;">
+    <div class="nav-text"></div>
+  <div class="topbar-toggle-down">
+    <i class="fas fa-angle-double-down" aria-hidden="true" data-toggle="down" title="展開功能表清單"></i>
+    <i class="fas fa-angle-double-up" aria-hidden="true" data-toggle="up" title="折疊功能表清單"></i>
+  </div>
+  <div class="nav-wrap container">
+    <ul id="menu-footer" class="nav container-inner group"> 
+    <li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="https://www.itread01.com/" rel="nofollow">首頁</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="https://www.itread01.com/study/mysql-tutorial.html">MySQL教學</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="https://www.itread01.com/t/%E7%B6%B2%E7%AB%99%E6%8A%80%E5%B7%A7/1/">網站技巧</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="https://www.itread01.com/t/%E7%B6%B2%E8%B7%AF%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88/1/">網路程式設計</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="https://www.itread01.com/t/%E8%BB%9F%E9%AB%94%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88/1/">軟體程式設計</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="https://www.itread01.com/t/%E8%B3%87%E6%96%99%E5%BA%AB/1/">資料庫</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="https://www.itread01.com/t/%E4%BD%9C%E6%A5%AD%E7%B3%BB%E7%B5%B1/1/">作業系統</a></li>
+<li id="menu-item-1907" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1907"><a href="https://www.itread01.com/t/%E6%8C%87%E4%BB%A4%E7%A2%BC%E5%B0%88%E6%AC%84/1/">其它</a></li>
+ 
+</ul>  </div>
+      <div id="topbar-header-search" class="container">
+      <div class="container-inner">
+        <div class="toggle-search"><i class="fas fa-search"></i></div>
+        <div class="search-expand">
+          <div class="search-expand-inner"><form class="searchform themeform" onsubmit="return searchKw(this)">
+	<div>
+		<input type="text" class="search" name="kw" onblur="if(this.value==&#39;&#39;)this.value=&#39;輸入關鍵字後搜尋&#39;;" onfocus="if(this.value==&#39;輸入關鍵字後搜尋&#39;)this.value=&#39;&#39;;" value="輸入關鍵字後搜尋">
+	</div>
+</form></div>
+        </div>
+      </div><!--/.container-inner-->
+    </div><!--/.container-->
+  
+</nav><!--/#nav-topbar-->  
+  <div class="container group">
+        <div class="container-inner">
+
+                    <div class="group pad central-header-zone">
+                  <div class="logo-tagline-group">
+                                        <p class="site-title"><a class="custom-logo-link" href="https://www.itread01.com/" rel="home"><img src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/logo.png"></a></p>
+                                                        </div>
+
+                                        <div id="header-widgets">
+                          <div id="custom_html-2" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><!-- /109765683/728_Banner -->
+ </div></div>                      </div><!--/#header-ads-->
+                                </div>
+                <nav class="nav-container group desktop-menu " id="nav-header" data-menu-id="header-3">
+    <div class="nav-text"><!-- put your mobile menu text here --></div>
+  <div class="nav-wrap container">
+        <ul id="menu-top-1" class="nav container-inner group">
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="https://www.itread01.com/">首頁</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="https://www.itread01.com/%E7%A7%91%E6%8A%80/">科技</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="https://www.itread01.com/info/">程式語言</a></li>
+</ul>  </div>
+</nav><!--/#nav-header-->      
+    </div><!--/.container-inner-->
+      </div><!--/.container-->
+</header><!--/#header-->        
+        <div class="container" id="page">
+            <div class="container-inner">
+
+                                <div class="main" style="">
+                    <div class="main-inner group">
+                        
+              <section class="content">
+              <div class="page-title pad group">
+          	    		<ul class="meta-single group">
+    			<li class="category"><a href="https://www.itread01.com/infolist/%E5%85%B6%E4%BB%96/1/">其他</a></li>
+    			    		</ul>
+
+    	
+    </div><!--/.page-title-->
+          <div class="pad group">
+              <article class="post-43193 post type-post status-publish format-standard has-post-thumbnail hentry category-news tag-stripe tag-32305 tag-32306 tag-4550 tag-5237 tag-31545 tag-6260">
+    <div class="post-inner group">
+
+      <h1 class="post-title entry-title">彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現</h1>
+<p class="post-byline"><span class="vcard author">
+     <span class="fn"><a href="https://www.itread01.com/infolist/%E5%85%B6%E4%BB%96/1/">其他</a></span>
+   </span> ·
+                            發表 <time class="published" datetime="2019-01-11">2019-01-11</time>
+             
+               </p>
+               <ins id="scupio-sc-4995-17811-847678_registed" class="scupioadslot" style="display: inline-block; width: 100%; height: 100px; position: relative;" data-sca-pub="lRIJBAgyQA==" data-sca-web="4995" data-sca-category="17" data-sca-cid="17811" data-sca-slot-type="PRA" data-sca-status="callback" undefined="0"><iframe name="scupioadframe" marginwidth="0" marginheight="0" frameborder="0" id="scupio-sc-4995-17811-847678_frame_7fe7fb85-0405-43fb-a2f0-4448b0205aef" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/ad.html" style="box-sizing: content-box; overflow: hidden; display: none; border: 0px; padding: 0px; margin: 0px; width: 100%; height: 100px;"></iframe><span id="viewability_detector_17811" style="position: absolute; z-index: -99999; background-color: transparent; left: 50%; top: 50%; width: 1px; height: 1px;"></span><ins class="scupioadslot" data-sca-pub="lRIJBAgyQA==" data-sca-web="4995" data-sca-category="17" data-sca-cid="17812" data-sca-slot-type="STA" data-sca-status="done" undefined="2" id="_registed" style="display: inline-block; width: 100%; height: 100px; margin: auto; position: relative;"><iframe name="scupioadframe" marginwidth="0" marginheight="0" frameborder="0" id="sc-1609128517329-800591712277_frame_9a60f04a-6491-41fe-a815-ae8d3a03cf0e" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/ad(1).html" style="box-sizing: content-box; overflow: hidden; display: inline; border: 0px; padding: 0px; margin: 0px; width: 100%; height: 100px;"></iframe><span id="viewability_detector_17812" style="position: absolute; z-index: -99999; background-color: transparent; left: 50%; top: 50%; width: 1px; height: 1px;"></span></ins></ins>
+<script async="" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/ad.js.下載"></script>
+<script>
+(function(s, c, u, p, i, o, a, d) {
+    'use strict';
+    var z=function(t,e,r){var a,n=document.createElement('ins'),s=n.style;for(a in n.className='scupioadslot',r&&(n.id=r),t)t.hasOwnProperty(a)&&(s[a]=t[a]);for(a in e)e.hasOwnProperty(a)&&n.setAttribute('data-sca-'+a,e[a]);return n};
+    (d = s.Scupioads = s.Scupioads || []).push({
+        id: u,
+        callback: function() {
+            p = c.getElementById(u);
+            i = p.style;
+            o = 'inline-block';
+            p.appendChild(z({
+                display: o,
+                width: '100%',
+                height: '100px',
+                margin: 'auto'
+            }, {
+                'pub': 'lRIJBAgyQA==',
+                'web': '4995',
+                'category': '17',
+                'cid': '17812',
+                'slot-type': 'STA'
+            }));
+            i.width = '100%';
+            i.height = '100px';
+            i.display = o;
+        }
+    });
+    setTimeout(function(){if(!s.Scupioads.init)for(i=d.length-1;0<=i;i--)if(d[i].id===u){d[i].callback(),d[i].callback=function(){};break}},1e3);
+})(window, document, 'scupio-sc-4995-17811-847678');
+</script>
+      
+      <div class="clear"></div>
+ 
+      <div class="entry themeform share">
+        <div class="entry-inner">
+		<div class="htmledit_views" id="content_views">
+                
+<div>﻿﻿</div>
+<p>本文給出基於彩色影象直方圖均衡化的OpenCV程式碼與結果示例！</p>
+<p>具體內容包含：</p>
+<p>1. 灰度影象直方圖均衡化</p>
+<p>2. 對RGB三通道各自均衡化後，再組合輸出結果</p>
+<p>3. RGB影象轉化為HSI，YUV，YCbCr顏色空間後，對亮度通道進行均衡化運算後再轉回RGB空間<br></p>
+<div class="dp-highlighter bg_cpp">
+<div class="bar">
+<div class="tools"><strong>[cpp]</strong> <a title="view plain" class="ViewSource" href="http://blog.csdn.net/frank_xu_0818/article/details/39232157#" rel="nofollow" target="_blank">
+view plain</a><span class="hu-external"></span><a title="copy" class="CopyToClipboard" href="http://blog.csdn.net/frank_xu_0818/article/details/39232157#" rel="nofollow" target="_blank">copy</a><span class="hu-external"></span><a title="print" class="PrintSource" href="http://blog.csdn.net/frank_xu_0818/article/details/39232157#" rel="nofollow" target="_blank">print</a><span class="hu-external"></span><a title="?" class="About" href="http://blog.csdn.net/frank_xu_0818/article/details/39232157#" rel="nofollow" target="_blank">?</a><span class="hu-external"></span></div>
+</div>
+<ol class="dp-cpp"><li class="alt"><span><span class="comment">/**</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;*&nbsp;@function&nbsp;EqualizeHist_Demo.cpp</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;*&nbsp;@brief&nbsp;Demo&nbsp;code&nbsp;for&nbsp;equalizeHist&nbsp;function</span>&nbsp;</span></li><li><span><span class="comment">&nbsp;*&nbsp;@author&nbsp;OpenCV&nbsp;team</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;*/</span></span></li><li class="alt"><span><span class="preprocessor">#include&nbsp;"opencv2/imgcodecs.hpp"</span></span></li><li><span><span class="preprocessor">#include&nbsp;"opencv2/highgui/highgui.hpp"</span></span></li><li class="alt"><span><span class="preprocessor">#include&nbsp;"opencv2/imgproc/imgproc.hpp"</span></span></li><li><span><span class="preprocessor">#include&nbsp;&lt;iostream&gt;</span></span></li><li class="alt"><span><span class="preprocessor">#include&nbsp;&lt;stdio.h&gt;</span></span></li><li class="alt"><span><span class="keyword">using</span><span class="keyword">namespace</span><span>&nbsp;cv;&nbsp;&nbsp;</span></span></li><li><span><span class="keyword">using</span><span class="keyword">namespace</span><span>&nbsp;std;&nbsp;&nbsp;</span></span></li><li><span><span class="comment">//&nbsp;add&nbsp;by&nbsp;frank,&nbsp;2014-09-25</span></span></li><li class="alt"><span>Mat&nbsp;equalizeChannelHist(<span class="keyword">const</span><span>&nbsp;Mat&nbsp;&amp;&nbsp;inputImage)&nbsp;&nbsp;</span></span></li><li><span>{&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(&nbsp;inputImage.channels()&nbsp;&gt;=&nbsp;3&nbsp;)&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vector&lt;Mat&gt;&nbsp;channels;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;split(inputImage,&nbsp;channels);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mat&nbsp;B,G,R;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equalizeHist(&nbsp;channels[0],&nbsp;B&nbsp;);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equalizeHist(&nbsp;channels[1],&nbsp;G&nbsp;);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equalizeHist(&nbsp;channels[2],&nbsp;R&nbsp;);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vector&lt;Mat&gt;&nbsp;combined;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;combined.push_back(B);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;combined.push_back(G);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;combined.push_back(R);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mat&nbsp;result;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;merge(combined,&nbsp;result);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;result;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;Mat();&nbsp;&nbsp;</span></span></li><li><span>}&nbsp;&nbsp;</span></li><li><span>Mat&nbsp;equalizeIntensityHist(<span class="keyword">const</span><span>&nbsp;Mat&nbsp;&amp;&nbsp;inputImage)&nbsp;&nbsp;</span></span></li><li class="alt"><span>{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(inputImage.channels()&nbsp;&gt;=&nbsp;3)&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mat&nbsp;ycrcb;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cvtColor(inputImage,&nbsp;ycrcb,&nbsp;COLOR_BGR2YCrCb);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vector&lt;Mat&gt;&nbsp;channels;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;split(ycrcb,&nbsp;channels);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equalizeHist(channels[0],&nbsp;channels[0]);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mat&nbsp;result;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;merge(channels,ycrcb);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cvtColor(ycrcb,&nbsp;result,&nbsp;COLOR_YCrCb2BGR);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;result;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;Mat();&nbsp;&nbsp;</span></span></li><li><span>}&nbsp;&nbsp;</span></li><li><span><span class="keyword">void</span><span>&nbsp;getGrayImageHistImage(</span><span class="keyword">const</span><span>&nbsp;Mat&nbsp;&amp;&nbsp;src,&nbsp;Mat&nbsp;&amp;&nbsp;histImage)&nbsp;&nbsp;</span></span></li><li class="alt"><span>{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;Mat&nbsp;hist;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="datatypes">int</span><span>&nbsp;histSize&nbsp;=&nbsp;256;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;calcHist(&amp;src,&nbsp;1,&nbsp;0,&nbsp;Mat(),&nbsp;hist,&nbsp;1,&nbsp;&amp;histSize,&nbsp;0);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;normalize(hist,&nbsp;hist,&nbsp;0,&nbsp;histImage.rows,&nbsp;NORM_MINMAX,&nbsp;CV_32F);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;histImage&nbsp;=&nbsp;Scalar::all(255);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="datatypes">int</span><span>&nbsp;binW&nbsp;=&nbsp;cvRound((</span><span class="datatypes">double</span><span>)histImage.cols/histSize);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>(&nbsp;</span><span class="datatypes">int</span><span>&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;histSize;&nbsp;i++&nbsp;)&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rectangle(&nbsp;histImage,&nbsp;Point(i*binW,&nbsp;histImage.rows),&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Point((i+1)*binW,&nbsp;histImage.rows&nbsp;-&nbsp;cvRound(hist.at&lt;<span class="datatypes">float</span><span>&gt;(i))),&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scalar::all(0),&nbsp;-1,&nbsp;8,&nbsp;0&nbsp;);&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li><span><span class="datatypes">int</span><span>&nbsp;main(&nbsp;</span><span class="datatypes">int</span><span>,&nbsp;</span><span class="datatypes">char</span><span>**&nbsp;argv&nbsp;)&nbsp;&nbsp;</span></span></li><li class="alt"><span>{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;Mat&nbsp;src,&nbsp;dst;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;Mat&nbsp;intensity_color_dst;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;Mat&nbsp;channel_color_dst;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">const</span><span class="datatypes">char</span><span>*&nbsp;source_gray_window&nbsp;=&nbsp;</span><span class="string">"Source&nbsp;Gray&nbsp;Image"</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">const</span><span class="datatypes">char</span><span>*&nbsp;equalized_gray_window&nbsp;=&nbsp;</span><span class="string">"Equalized&nbsp;Gray&nbsp;Image"</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">const</span><span class="datatypes">char</span><span>*&nbsp;source_color_window&nbsp;=&nbsp;</span><span class="string">"Source&nbsp;Color&nbsp;Image"</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">const</span><span class="datatypes">char</span><span>*&nbsp;equalized_intensity_color_window&nbsp;=&nbsp;</span><span class="string">"Equalized&nbsp;Intensity&nbsp;Color&nbsp;Image"</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">const</span><span class="datatypes">char</span><span>*&nbsp;equalized_channels_color_window&nbsp;=&nbsp;</span><span class="string">"Equalized&nbsp;Channels&nbsp;Color&nbsp;Image"</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">///&nbsp;Load&nbsp;image</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;src&nbsp;=&nbsp;imread(&nbsp;argv[1],&nbsp;1&nbsp;);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(&nbsp;src.empty()&nbsp;)&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cout&lt;&lt;<span class="string">"Usage:&nbsp;./Histogram_Demo&nbsp;&lt;path_to_image&gt;"</span><span>&lt;&lt;endl;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;-1;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">///&nbsp;color&nbsp;image&nbsp;intensity&nbsp;equalization</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;intensity_color_dst&nbsp;=&nbsp;equalizeIntensityHist(src);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;namedWindow(&nbsp;source_color_window,&nbsp;WINDOW_AUTOSIZE&nbsp;);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;namedWindow(&nbsp;equalized_intensity_color_window,&nbsp;WINDOW_AUTOSIZE&nbsp;);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imshow(&nbsp;source_color_window,&nbsp;src&nbsp;);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imshow(&nbsp;equalized_intensity_color_window,&nbsp;intensity_color_dst&nbsp;);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">///&nbsp;color&nbsp;image&nbsp;each&nbsp;channel&nbsp;equalization</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;channel_color_dst&nbsp;=&nbsp;equalizeChannelHist(src);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;namedWindow(&nbsp;equalized_channels_color_window,&nbsp;WINDOW_AUTOSIZE&nbsp;);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imshow(&nbsp;equalized_channels_color_window,&nbsp;channel_color_dst&nbsp;);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">///&nbsp;gray&nbsp;image&nbsp;equalization</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cvtColor(&nbsp;src,&nbsp;src,&nbsp;COLOR_BGR2GRAY&nbsp;);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equalizeHist(&nbsp;src,&nbsp;dst&nbsp;);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;namedWindow(&nbsp;source_gray_window,&nbsp;WINDOW_AUTOSIZE&nbsp;);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;namedWindow(&nbsp;equalized_gray_window,&nbsp;WINDOW_AUTOSIZE&nbsp;);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imshow(&nbsp;source_gray_window,&nbsp;src&nbsp;);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imshow(&nbsp;equalized_gray_window,&nbsp;dst&nbsp;);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">///&nbsp;get&nbsp;source&nbsp;gray&nbsp;image&nbsp;Histogram</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mat&nbsp;graySrc_histImage&nbsp;=&nbsp;Mat::ones(200,&nbsp;260,&nbsp;CV_8U)*255;&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getGrayImageHistImage(src,&nbsp;graySrc_histImage);&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imshow(<span class="string">"source&nbsp;gray&nbsp;image&nbsp;histogram"</span><span>,&nbsp;graySrc_histImage);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">///&nbsp;get&nbsp;equalized&nbsp;gray&nbsp;image&nbsp;Histogram</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mat&nbsp;grayDst_histImage&nbsp;=&nbsp;Mat::ones(200,&nbsp;260,&nbsp;CV_8U)*255;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getGrayImageHistImage(dst,&nbsp;grayDst_histImage);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imshow(<span class="string">"Equalized&nbsp;gray&nbsp;image&nbsp;histogram"</span><span>,&nbsp;grayDst_histImage);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">///&nbsp;Wait&nbsp;until&nbsp;user&nbsp;exits&nbsp;the&nbsp;program</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;waitKey(0);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;0;&nbsp;&nbsp;</span></span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li></ol></div>
+<pre class="hljs cpp"><code class="language-cpp"><span class="hljs-comment">/**
+ * @function EqualizeHist_Demo.cpp
+ * @brief Demo code for equalizeHist function
+ * @author OpenCV team
+ */</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"opencv2/imgcodecs.hpp"</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"opencv2/highgui/highgui.hpp"</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"opencv2/imgproc/imgproc.hpp"</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> cv;
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-comment">// add by frank, 2014-09-25</span>
+<span class="hljs-function">Mat <span class="hljs-title">equalizeChannelHist</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Mat &amp; inputImage)</span>
+</span>{
+	<span class="hljs-keyword">if</span>( inputImage.channels() &gt;= <span class="hljs-number">3</span> )
+	{
+		<span class="hljs-built_in">vector</span>&lt;Mat&gt; channels;
+		split(inputImage, channels);
+
+		Mat B,G,R;
+
+		equalizeHist( channels[<span class="hljs-number">0</span>], B );
+		equalizeHist( channels[<span class="hljs-number">1</span>], G );
+		equalizeHist( channels[<span class="hljs-number">2</span>], R );
+
+		<span class="hljs-built_in">vector</span>&lt;Mat&gt; combined;
+		combined.push_back(B);
+		combined.push_back(G);
+		combined.push_back(R);
+
+		Mat result;
+		merge(combined, result);
+
+		<span class="hljs-keyword">return</span> result;
+	}
+
+	<span class="hljs-keyword">return</span> Mat();
+}
+
+<span class="hljs-function">Mat <span class="hljs-title">equalizeIntensityHist</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Mat &amp; inputImage)</span>
+</span>{
+	<span class="hljs-keyword">if</span>(inputImage.channels() &gt;= <span class="hljs-number">3</span>)
+	{
+		Mat ycrcb;
+
+		cvtColor(inputImage, ycrcb, COLOR_BGR2YCrCb);
+
+		<span class="hljs-built_in">vector</span>&lt;Mat&gt; channels;
+		split(ycrcb, channels);
+
+		equalizeHist(channels[<span class="hljs-number">0</span>], channels[<span class="hljs-number">0</span>]);
+
+		Mat result;
+		merge(channels,ycrcb);
+
+		cvtColor(ycrcb, result, COLOR_YCrCb2BGR);
+
+		<span class="hljs-keyword">return</span> result;
+	}
+
+	<span class="hljs-keyword">return</span> Mat();
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">getGrayImageHistImage</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Mat &amp; src, Mat &amp; histImage)</span>
+</span>{
+	Mat hist;
+	<span class="hljs-keyword">int</span> histSize = <span class="hljs-number">256</span>;
+
+	calcHist(&amp;src, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, Mat(), hist, <span class="hljs-number">1</span>, &amp;histSize, <span class="hljs-number">0</span>);
+	normalize(hist, hist, <span class="hljs-number">0</span>, histImage.rows, NORM_MINMAX, CV_32F);
+
+	histImage = Scalar::all(<span class="hljs-number">255</span>);
+	<span class="hljs-keyword">int</span> binW = cvRound((<span class="hljs-keyword">double</span>)histImage.cols/histSize);
+
+	<span class="hljs-keyword">for</span>( <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; histSize; i++ )
+		rectangle( histImage, Point(i*binW, histImage.rows),
+		Point((i+<span class="hljs-number">1</span>)*binW, histImage.rows - cvRound(hist.at&lt;<span class="hljs-keyword">float</span>&gt;(i))),
+		Scalar::all(<span class="hljs-number">0</span>), <span class="hljs-number">-1</span>, <span class="hljs-number">8</span>, <span class="hljs-number">0</span> );
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">( <span class="hljs-keyword">int</span>, <span class="hljs-keyword">char</span>** argv )</span>
+</span>{
+	Mat src, dst;
+	Mat intensity_color_dst;
+	Mat channel_color_dst;
+
+	<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* source_gray_window = <span class="hljs-string">"Source Gray Image"</span>;
+	<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* equalized_gray_window = <span class="hljs-string">"Equalized Gray Image"</span>;
+	<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* source_color_window = <span class="hljs-string">"Source Color Image"</span>;
+	<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* equalized_intensity_color_window = <span class="hljs-string">"Equalized Intensity Color Image"</span>;
+	<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* equalized_channels_color_window = <span class="hljs-string">"Equalized Channels Color Image"</span>;
+
+	<span class="hljs-comment">/// Load image</span>
+	src = imread( argv[<span class="hljs-number">1</span>], <span class="hljs-number">1</span> );
+
+	<span class="hljs-keyword">if</span>( src.empty() )
+	{ 
+		<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"Usage: ./Histogram_Demo &lt;path_to_image&gt;"</span>&lt;&lt;<span class="hljs-built_in">endl</span>;
+		<span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+	}
+
+	<span class="hljs-comment">/// color image intensity equalization</span>
+	{
+		intensity_color_dst = equalizeIntensityHist(src);
+		
+		namedWindow( source_color_window, WINDOW_AUTOSIZE );
+		namedWindow( equalized_intensity_color_window, WINDOW_AUTOSIZE );
+
+		imshow( source_color_window, src );
+		imshow( equalized_intensity_color_window, intensity_color_dst );
+	}
+
+	<span class="hljs-comment">/// color image each channel equalization</span>
+	{
+		channel_color_dst = equalizeChannelHist(src);
+		namedWindow( equalized_channels_color_window, WINDOW_AUTOSIZE );
+		imshow( equalized_channels_color_window, channel_color_dst );
+	}
+
+	<span class="hljs-comment">/// gray image equalization</span>
+	{
+		cvtColor( src, src, COLOR_BGR2GRAY );
+		equalizeHist( src, dst );
+
+		namedWindow( source_gray_window, WINDOW_AUTOSIZE );
+		namedWindow( equalized_gray_window, WINDOW_AUTOSIZE );
+
+		imshow( source_gray_window, src );
+		imshow( equalized_gray_window, dst );
+
+		<span class="hljs-comment">/// get source gray image Histogram</span>
+		Mat graySrc_histImage = Mat::ones(<span class="hljs-number">200</span>, <span class="hljs-number">260</span>, CV_8U)*<span class="hljs-number">255</span>;
+		getGrayImageHistImage(src, graySrc_histImage);
+		imshow(<span class="hljs-string">"source gray image histogram"</span>, graySrc_histImage);
+
+		<span class="hljs-comment">/// get equalized gray image Histogram</span>
+		Mat grayDst_histImage = Mat::ones(<span class="hljs-number">200</span>, <span class="hljs-number">260</span>, CV_8U)*<span class="hljs-number">255</span>;
+		getGrayImageHistImage(dst, grayDst_histImage);
+		imshow(<span class="hljs-string">"Equalized gray image histogram"</span>, grayDst_histImage);
+	}
+
+	<span class="hljs-comment">/// Wait until user exits the program</span>
+	waitKey(<span class="hljs-number">0</span>);
+
+	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre>
+<p>執行結果，如下圖所示：<br></p>
+<p align="center"><img width="300" height="300" alt="" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/20140912171135288" style="width:236px;" referrerpolicy="no-referrer" class="img-fluid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img width="300" height="300" alt="" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/20140912170937671" style="width:234px;" referrerpolicy="no-referrer" class="img-fluid"></p>
+<p align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 原灰度影象&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 直方圖均衡化增強後圖像</p>
+<p align="left"><img width="300" height="300" alt="" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/20140912170905703" style="width:213px;" referrerpolicy="no-referrer" class="img-fluid">&nbsp; &nbsp;<img width="300" height="300" alt="" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/20140912171155224" style="width:208px;" referrerpolicy="no-referrer" class="img-fluid">&nbsp;&nbsp;<img width="300" height="300" alt="" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/20140912170954609" style="width:205px;" referrerpolicy="no-referrer" class="img-fluid"></p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;原彩色影象&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RGB各通道直方圖均衡化後圖像&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YCbCr 亮度通道Y直方圖均衡化後圖像</p>
+<p align="left">分RGB通道均衡化後圖像顏色有失真情況，而亮度通道均衡化結果不會，主要原因：</p>
+<p align="left">Histogram equalization is a non-linear process. Channel splitting and equalizing each channel separately is not the proper way for equalization of contrast. Equalization involves Intensity values of the image not the color components. So for
+ a simple RGB color image, HE should not be applied individually on each channel. Rather, it should be applied such that intensity values are equalized without disturbing the color balance of the image. So, the first step is to convert the color space of the
+ image from RGB into one of the color space which separates intensity values from color components. Some of these are:<br>
+&nbsp; HSV/HLS<br>
+&nbsp; YUV<br>
+&nbsp; YCbCr<br>
+Convert the image from RGB to one of the above mentioned color spaces. YCbCr is preferred as it is designed for digital images.Perform HE of the intensity plane Y. Convert the image back to RGB.</p>
+            </div>
+                
+        </div>
+<script async="" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/f.txt"></script>
+<!-- itbox_bottom -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7943421771889568" data-ad-slot="6403398690" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</s
+	 <center><ins id="scupio-sc-4995-17522-26274" class="scupioadslot" style="display:inline-block;width:300px;height:250px;"
+    data-sca-pub="lRIJBAgyQA=="
+    data-sca-web="4995"
+    data-sca-category="17"
+    data-sca-cid="17522"
+    data-sca-slot-type="PRA"></ins>
+<script async src="https://img.scupio.com/js/ad.js"></script>
+<script>
+(function(s, c, u, p, i, o, a, d) {
+    'use strict';
+    var z=function(t,e,r){var a,n=document.createElement('ins'),s=n.style;for(a in n.className='scupioadslot',r&&(n.id=r),t)t.hasOwnProperty(a)&&(s[a]=t[a]);for(a in e)e.hasOwnProperty(a)&&n.setAttribute('data-sca-'+a,e[a]);return n};
+    (d = s.Scupioads = s.Scupioads || []).push({
+        id: u,
+        callback: function() {
+            p = c.getElementById(u);
+            i = p.style;
+            o = 'inline-block';
+            p.appendChild(z({
+                display: o,
+                width: '300px',
+                height: '250px',
+                margin: 'auto'
+            }, {
+                'pub': 'lRIJBAgyQA==',
+                'web': '4995',
+                'category': '17',
+                'cid': '17523',
+                'slot-type': 'STA'
+            }));
+            i.width = '300px';
+            i.height = '250px';
+            i.display = o;
+        }
+    });
+    setTimeout(function(){if(!s.Scupioads.init)for(i=d.length-1;0<=i;i--)if(d[i].id===u){d[i].callback(),d[i].callback=function(){};break}},1e3);
+})(window, document, 'scupio-sc-4995-17522-26274');
+</script>
+          <nav class="pagination group">
+                      </nav><!--/.pagination-->
+        </div>
+
+    
+        <div class="clear"></div>
+      </div><!--/.entry-->
+
+    </article></div><!--/.post-inner-->
+  <!--/.post-->
+
+<div class="clear"></div>
+
+<p class="post-tags"><span>標籤：</span>  </p>
+
+<center>
+</center>
+
+
+<h4 class="heading">
+	<i class="far fa-hand-point-right"></i>您可能也會喜歡…</h4>
+
+ <ul class="lrelated-posts group">
+		 	<li><a href="https://www.itread01.com/content/1547194142.html" target="_blank">彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現</a> </li>
+    	<li><a href="https://www.itread01.com/content/1542299766.html" target="_blank">0016-在OpenCV環境下進行影象的直方圖均衡化</a> </li>
+    	<li><a href="https://www.itread01.com/content/1540993224.html" target="_blank">灰度圖的直方圖均衡化(Histogram Equalization)原理與 Python 實現</a> </li>
+    	<li><a href="https://www.itread01.com/content/1546616888.html" target="_blank">灰度圖的直方圖均衡化的原理及實現</a> </li>
+    	<li><a href="https://www.itread01.com/content/1542966907.html" target="_blank">MATLAB的直方圖均衡化</a> </li>
+    	<li><a href="https://www.itread01.com/content/1542310036.html" target="_blank">OpenCV—python 色階調整（直方圖均衡化）</a> </li>
+    	<li><a href="https://www.itread01.com/content/1496558414.html" target="_blank">我理解的直方圖均衡化</a> </li>
+    	<li><a href="https://www.itread01.com/content/1544974984.html" target="_blank">使用C++實現彩色影象直方圖均衡化的三種方法</a> </li>
+    	<li><a href="https://www.itread01.com/content/1544556976.html" target="_blank">C# EMGU 3.4.1學習筆記（十二）示例程式：直方圖均衡化（彩色影象）</a> </li>
+    	<li><a href="https://www.itread01.com/content/1546317905.html" target="_blank">[影象去霧]（一）限制對比度的自適應直方圖均衡化(CLAHE)的學習體會——影象分塊</a> </li>
+    	<li><a href="https://www.itread01.com/content/1546242693.html" target="_blank">直方圖均衡化的作用是影象增強原理</a> </li>
+    	<li><a href="https://www.itread01.com/content/1545182657.html" target="_blank">OpenCV數字影象處理（一）——直方圖均衡化的實現</a> </li>
+    	<li><a href="https://www.itread01.com/content/1544867113.html" target="_blank">影象處理基礎02直方圖均衡化的推導和程式設計實現</a> </li>
+    	<li><a href="https://www.itread01.com/content/1541985811.html" target="_blank">MATLAB：虹膜識別的影象灰度化處理，直方圖均衡化</a> </li>
+    	<li><a href="https://www.itread01.com/content/1568099162.html" target="_blank">【數字影象處理】灰度直方圖、直方圖均衡化、直方圖規定化</a> </li>
+     
+</ul><!--/.post-related-->
+
+
+
+        </section></div><!--/.pad-->
+        <!--/.content-->
+          
+
+	<div class="sidebar s1 collapsed" data-position="right" data-layout="col-2cl" data-sb-id="s1" style="transform: translateZ(0px);">
+
+		<a class="sidebar-toggle" title="延伸側邊欄位" style="transform: translate(0px, 0px);"><i class="fas icon-sidebar-toggle"></i></a>
+
+		<div class="sidebar-content" style="transform: translate(0px, 0px);">
+
+			  			<div class="sidebar-top group">
+                        <p>贊助商廣告</p>
+             
+           			</div>
+		 
+				<ul class="post-nav group">
+      
+ 
+		<li class="previous"> </li>
+  
+  
+		 <li class="next">  </li>
+ 
+	</ul>
+
+<div id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><!-- /109765683/300x250 -->
+<ins id="scupio-sc-4995-17521-400386_registed" class="scupioadslot" style="display: inline-block; width: 300px; height: 250px; position: relative;" data-sca-pub="lRIJBAgyQA==" data-sca-web="4995" data-sca-category="17" data-sca-cid="17521" data-sca-slot-type="PRA" data-sca-status="callback" undefined="1"><iframe name="scupioadframe" marginwidth="0" marginheight="0" frameborder="0" id="scupio-sc-4995-17521-400386_frame_62a9c87b-2d0a-410a-bf3a-730470d57639" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/ad(2).html" style="box-sizing: content-box; overflow: hidden; display: none; border: 0px; padding: 0px; margin: 0px; width: 300px; height: 250px;"></iframe><span id="viewability_detector_17521" style="position: absolute; z-index: -99999; background-color: transparent; left: 50%; top: 50%; width: 1px; height: 1px;"></span><ins class="scupioadslot" data-sca-pub="lRIJBAgyQA==" data-sca-web="4995" data-sca-category="17" data-sca-cid="17518" data-sca-slot-type="STA" data-sca-status="done" undefined="3" id="_registed" style="display: inline-block; width: 300px; height: 250px; margin: auto; position: relative;"><iframe name="scupioadframe" marginwidth="0" marginheight="0" frameborder="0" id="sc-1609128517697-132286421575_frame_bbd34985-7e54-4db5-8924-7c6cb7e5cd48" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/ad(3).html" style="box-sizing: content-box; overflow: hidden; display: inline; border: 0px; padding: 0px; margin: 0px; width: 300px; height: 250px;"></iframe><span id="viewability_detector_17518" style="position: absolute; z-index: -99999; background-color: transparent; left: 50%; top: 50%; width: 1px; height: 1px;"></span></ins></ins>
+<script async="" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/ad.js.下載"></script>
+<script>
+(function(s, c, u, p, i, o, a, d) {
+    'use strict';
+    var z=function(t,e,r){var a,n=document.createElement('ins'),s=n.style;for(a in n.className='scupioadslot',r&&(n.id=r),t)t.hasOwnProperty(a)&&(s[a]=t[a]);for(a in e)e.hasOwnProperty(a)&&n.setAttribute('data-sca-'+a,e[a]);return n};
+    (d = s.Scupioads = s.Scupioads || []).push({
+        id: u,
+        callback: function() {
+            p = c.getElementById(u);
+            i = p.style;
+            o = 'inline-block';
+            p.appendChild(z({
+                display: o,
+                width: '300px',
+                height: '250px',
+                margin: 'auto'
+            }, {
+                'pub': 'lRIJBAgyQA==',
+                'web': '4995',
+                'category': '17',
+                'cid': '17518',
+                'slot-type': 'STA'
+            }));
+            i.width = '300px';
+            i.height = '250px';
+            i.display = o;
+        }
+    });
+    setTimeout(function(){if(!s.Scupioads.init)for(i=d.length-1;0<=i;i--)if(d[i].id===u){d[i].callback(),d[i].callback=function(){};break}},1e3);
+})(window, document, 'scupio-sc-4995-17521-400386');
+</script>
+</div></div><div id="text-7" class="widget widget_text">			 
+		</div>
+        
+        <div id="alxtabs-2" class="widget widget_hu_tabs">
+<h3 class="widget-title"></h3>
+<ul class="alx-tabs-nav group tab-count-3"><li class="alx-tab tab-recent active"><a href="https://www.itread01.com/content/1547194142.html#tab-recent-2" title="熱門文章"><i class="far fa-clock"></i></a></li><li class="alx-tab tab-tags"><a href="https://www.itread01.com/content/1547194142.html#tab-tags-2" title="標籤"><i class="fas fa-star"></i> </a></li></ul>
+	<div class="alx-tabs-container">						
+			<ul id="tab-recent-2" class="alx-tab group" style="display: block;">
+								 
+					      
+                  <li>
+					<div class="tab-item-inner group">
+						 						
+                        <p class="tab-item-title"> <a href="https://www.itread01.com/content/1547194142.html">linux定時匯出資料庫 </a></p>
+										</div>
+				</li>
+                
+                
+                 <li>
+					<div class="tab-item-inner group">
+						 						
+                        <p class="tab-item-title"> <a href="https://www.itread01.com/content/1547194143.html">EL表示式為什麼可以在值棧中取值 </a></p>
+										</div>
+				</li>
+                
+                
+                 <li>
+					<div class="tab-item-inner group">
+						 						
+                        <p class="tab-item-title"> <a href="https://www.itread01.com/content/1547194144.html">網站的護眼模式和夜間模式 </a></p>
+										</div>
+				</li>
+                
+                
+                 <li>
+					<div class="tab-item-inner group">
+						 						
+                        <p class="tab-item-title"> <a href="https://www.itread01.com/content/1547194144.html">MLAPP學習筆記-Data Mining和Machine Learning的區別及延伸 </a></p>
+										</div>
+				</li>
+                
+                
+                 <li>
+					<div class="tab-item-inner group">
+						 						
+                        <p class="tab-item-title"> <a href="https://www.itread01.com/content/1547194146.html">UIAutomator2.0 簡介 </a></p>
+										</div>
+				</li>
+                
+                
+                 <li>
+					<div class="tab-item-inner group">
+						 						
+                        <p class="tab-item-title"> <a href="https://www.itread01.com/content/1547194146.html">轉位元組流 </a></p>
+										</div>
+				</li>
+                
+                
+                 <li>
+					<div class="tab-item-inner group">
+						 						
+                        <p class="tab-item-title"> <a href="https://www.itread01.com/content/1547202008.html">TCGA一些數據庫 </a></p>
+										</div>
+				</li>
+                
+                
+                 <li>
+					<div class="tab-item-inner group">
+						 						
+                        <p class="tab-item-title"> <a href="https://www.itread01.com/content/1547194147.html">Android RecyclerView 實現item點選水波紋動畫效果 </a></p>
+										</div>
+				</li>
+                
+                
+                 <li>
+					<div class="tab-item-inner group">
+						 						
+                        <p class="tab-item-title"> <a href="https://www.itread01.com/content/1547194149.html">初試 Jenkins 使用 Kubernetes Plugin 完成持續構建與釋出 </a></p>
+										</div>
+				</li>
+                
+                
+                 <li>
+					<div class="tab-item-inner group">
+						 						
+                        <p class="tab-item-title"> <a href="https://www.itread01.com/content/1547194150.html">簡單dp之——m段子序列的最大和 </a></p>
+										</div>
+				</li>
+                
+                
+  	 
+				</ul><!--/.alx-tab-->
+
+			<ul id="tab-tags-2" class="alx-tab group" style="display: none;">
+				<li>
+					<a href="https://www.itread01.com/android/" class="tag-cloud-link tag-link-9 tag-link-position-1" style="font-size: 12.15625pt;">Android</a> 	
+					<a href="https://www.itread01.com/study/itools_download.html" class="tag-cloud-link tag-link-9 tag-link-position-1" style="font-size: 12.15625pt;">iTools</a> 
+					<a href="https://www.itread01.com/mysql/" class="tag-cloud-link tag-link-9 tag-link-position-1" style="font-size: 12.15625pt;">Mysql</a> 
+					<a href="https://www.itread01.com/windows/" class="tag-cloud-link tag-link-9 tag-link-position-1" style="font-size: 12.15625pt;">Windows</a> 
+					<a href="https://www.3du.tw/" class="tag-cloud-link tag-link-9 tag-link-position-1" style="font-size: 12.15625pt;">三度辭典</a> 
+					 
+                   </li>
+			</ul><!--/.alx-tab-->
+
+			</div>
+</div>
+		</div><!--/.sidebar-content-->
+
+	</div><!--/.sidebar-->
+
+	
+
+        </div><!--/.main-inner-->
+      </div><!--/.main-->
+    </div><!--/.container-inner-->
+  </div><!--/.container-->
+    <footer id="footer">
+          <nav class="nav-container group" id="nav-footer" data-menu-id="footer-4" data-menu-scrollable="false">
+                      <!-- <div class="ham__navbar-toggler collapsed" aria-expanded="false">
+          <div class="ham__navbar-span-wrapper">
+            <span class="ham-toggler-menu__span"></span>
+          </div>
+        </div> -->
+        <div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+          <div class="ham__navbar-span-wrapper">
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
+            <span class="line line-3"></span>
+          </div>
+        </div>
+                    <div class="nav-text"></div>
+        <div class="nav-wrap">
+          <ul id="menu-top-2" class="nav container group">
+           <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="https://www.itread01.com/" rel="nofollow">首頁</a></li>
+		   <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-290"><a href="https://www.itread01.com/study/python-tutorial.html">Python教學</a></li>
+ 
+</ul>        </div>
+      </nav><!--/#nav-footer-->
+    
+    <section class="container" id="footer-bottom">
+      <div class="container-inner">
+
+        <a id="back-to-top" href="https://www.itread01.com/content/1547194142.html#"><i class="fas fa-angle-up"></i></a>
+
+        <div class="pad group">
+
+          <div class="grid one-half">
+                        
+            <div id="copyright">
+                              <p>ITREAD01.COM © 2018. 版權所有。 </p>
+                          </div><!--/#copyright-->
+          </div>
+        </div><!--/.pad-->
+
+      </div><!--/.container-inner-->
+    </section><!--/.container-->
+
+  </footer><!--/#footer-->
+
+<!--/#wrapper-->
+
+<!-- Powered by WPtouch: 4.3.27 --><script type="text/javascript" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/jQuerySharrre.min.js.下載"></script>
+<script type="text/javascript" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/underscore.min.js.下載"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var HUParams = {"_disabled":[],"SmoothScroll":{"Enabled":true,"Options":{"touchpadSupport":false}},"centerAllImg":"1","timerOnScrollAllBrowsers":"1","extLinksStyle":"1","extLinksTargetExt":"1","extLinksSkipSelectors":{"classes":["btn","button"],"ids":[]},"imgSmartLoadEnabled":"","imgSmartLoadOpts":{"parentSelectors":[".container .content",".container .sidebar","#footer","#header-widgets"],"opts":{"excludeImg":[".tc-holder-img"],"fadeIn_options":100}},"goldenRatio":"1.618","gridGoldenRatioLimit":"350","sbStickyUserSettings":{"desktop":true,"mobile":false},"isWPMobile":"","menuStickyUserSettings":{"desktop":"stick_up","mobile":"stick_up"},"isDevMode":"","ajaxUrl":"https:\/\/www.itread01.com\/?huajax=1","frontNonce":{"id":"HuFrontNonce","handle":"d9125fec3b"},"userStarted":{"with":"with|3.3.27","on":{"date":"2018-03-27 03:41:18.000000","timezone_type":3,"timezone":"UTC"}},"isWelcomeNoteOn":"","welcomeContent":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/scripts.min.js.下載"></script>
+<script type="text/javascript" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/wp-embed.min.js.下載"></script>
+
+<!--[if lt IE 9]>
+<script src="/img/css/js/respond.js"></script>
+<![endif]-->
+<div style="display:none"><script type="text/javascript" src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/c.js.下載"></script><script src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/z_stat.php" language="JavaScript"></script><script src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/core.php" charset="utf-8" type="text/javascript"></script><a href="https://www.cnzz.com/stat/website.php?web_id=1275098034" target="_blank" title="站长统计">站长统计</a>
+0.54988598823547</div>
+
+    <!-- Bootstrap core JavaScript ================================================== -->
+        <script src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/jquery.min.js(1).下載"></script>
+     
+        <!-- Placed at the end of the document so the pages load faster -->
+        
+
+<script src="./彩色影象的直方圖均衡化--基於OpenCV中EqualizeHist_Demo實現 - IT閱讀_files/highlight.min.js.下載"></script>
+<script>
+function joinUrl(url, concat) {
+  var url1 = url.split('/');
+  var url2 = concat.split('/');
+  var url3 = [ ];
+  for (var i = 0, l = url1.length; i < l; i ++) {
+    if (url1[i] == '..') {
+      url3.pop();
+    } else if (url1[i] == '.') {
+      continue;
+    } else {
+      url3.push(url1[i]);
+    }
+  }
+  for (var i = 0, l = url2.length; i < l; i ++) {
+    if (url2[i] == '..') {
+      url3.pop();
+    } else if (url2[i] == '.') {
+      continue;
+    } else {
+      url3.push(url2[i]);
+    }
+  }
+  return url3.join('/');
+}
+$(document).ready(function() {
+    $('pre').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+	var source = $('#source-url').html();
+	if(source.indexOf('segmentfault.com') > 0) {
+		var imgs = $('#main-content').find('img');
+		$.each(imgs, function(index, img) {
+			var data_src = $(img).attr('data-src');
+			data_src = 'https://segmentfault.com' + data_src;
+			console.log(data_src);
+			$(img).attr('src', data_src);
+			// $(img).attr('src', '');
+		});
+	}
+});
+</script></body></html>
